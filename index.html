@@ -59,6 +59,48 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(232,213,168,0.18);
     }
     .console-row { display: flex; align-items: center; gap: 12px; }
+    .console-top { display: flex; align-items: center; gap: 10px; margin: -4px 0 -4px 98px; }
+    #fly-btn, #drone-btn {
+      appearance: none; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 14px; border-radius: 999px;
+      border: 1px solid rgba(212,179,106,0.55);
+      background: linear-gradient(180deg, #221c16, #12100c);
+      color: #e8d5a3; font-size: 13px; letter-spacing: 0.12em;
+    }
+    #fly-btn:hover, #drone-btn:hover { border-color: #d4b36a; }
+    #drone-btn.on { background: linear-gradient(180deg, #f0d48c, #c9a45a); color: #2a1e0a; border-color: #f0d48c; box-shadow: 0 0 14px rgba(240,212,140,0.45); }
+    #drone-btn .fly-ico { font-size: 15px; }
+    #fly-btn.on { background: linear-gradient(180deg, #f0d48c, #c9a45a); color: #2a1e0a; border-color: #f0d48c; box-shadow: 0 0 14px rgba(240,212,140,0.45); }
+    #fly-btn .fly-ico { font-size: 15px; }
+    .console-top small { color: #9a8868; font-size: 11px; letter-spacing: 0.12em; }
+    body.flying .crosshair { opacity: 0; }
+    /* v29 Drone FPV OSD */
+    body.droning .crosshair, body.droning #resume { opacity: 0 !important; }
+    body.droning canvas { cursor: crosshair; }
+    #drone-osd { position: fixed; inset: 0; z-index: 4; pointer-events: none; display: none; color: #f0d48c;
+      font: 12px/1.4 ui-monospace, Consolas, monospace; letter-spacing: 0.12em; text-shadow: 0 1px 2px #000; }
+    body.droning #drone-osd { display: block; }
+    #drone-osd .d-edge { position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(240,212,140,0.10), transparent 22%, transparent 78%, rgba(240,212,140,0.10)),
+                  linear-gradient(180deg, rgba(240,212,140,0.07), transparent 20%, transparent 80%, rgba(240,212,140,0.07)); }
+    #drone-osd .d-box { position: absolute; inset: 24% 27%; }
+    #drone-osd .d-box i { position: absolute; width: 26px; height: 26px; border: 2px solid rgba(240,212,140,0.55); }
+    #drone-osd .d-box i:nth-child(1) { left: 0; top: 0; border-right: 0; border-bottom: 0; }
+    #drone-osd .d-box i:nth-child(2) { right: 0; top: 0; border-left: 0; border-bottom: 0; }
+    #drone-osd .d-box i:nth-child(3) { left: 0; bottom: 0; border-right: 0; border-top: 0; }
+    #drone-osd .d-box i:nth-child(4) { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+    #drone-osd.lock .d-box i { border-color: #7ee08a; }
+    #drone-osd .d-ret { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px;
+      border: 1.5px solid rgba(240,212,140,0.8); border-radius: 50%; }
+    #drone-osd .d-top { position: absolute; top: 72px; left: 22px; display: flex; gap: 14px;
+      padding: 5px 14px; border-radius: 999px; background: rgba(10,8,6,0.55); border: 1px solid rgba(212,179,106,0.35); }
+    #drone-osd .d-top b { color: #ff6b5b; }
+    #drone-osd .d-bot { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; gap: 18px;
+      padding: 5px 16px; border-radius: 999px; background: rgba(10,8,6,0.55); border: 1px solid rgba(212,179,106,0.35); white-space: nowrap; }
+    #drone-osd .d-bot b { color: #fff3d6; }
+    #drone-flash { position: fixed; inset: 0; z-index: 55; pointer-events: none; opacity: 0;
+      background: radial-gradient(circle, #fff8e6 0%, #f0d48c 45%, #1a140c 100%); }
     .console-lab {
       flex: 0 0 42px;
       color: #e8d5a3;
@@ -323,6 +365,27 @@
     #iv-read h3 { margin: 0 0 6px; font-size: 22px; font-weight: 600; letter-spacing: 0.04em; }
     #iv-read .ivr-by { margin: 0 0 14px; font-size: 13px; color: var(--gold); letter-spacing: 0.1em; }
     #iv-read .ivr-desc { margin: 0; font-size: 14px; line-height: 1.9; white-space: pre-wrap; }
+    /* v28 主畫面：設定區改成對齊的格線，內容超出視窗時可用滾輪上下捲動 */
+    #blocker { overflow-y: auto; overscroll-behavior: contain; align-items: flex-start; }
+    #blocker > .panel-card { margin: auto; max-width: 760px; }
+    .opt-panel { margin: 14px auto 0; padding: 12px 16px 14px; max-width: 700px; border: 1px solid #3a3228; border-radius: 16px; background: rgba(20,17,12,0.6); text-align: left; }
+    .opt-head { color: var(--gold); font-size: 12px; letter-spacing: 0.24em; margin: 4px 0 8px; }
+    .opt-head + .opt-grid { margin-bottom: 10px; }
+    .opt-grid + .opt-head { margin-top: 14px; padding-top: 12px; border-top: 1px solid #2a241c; }
+    .opt-grid { display: grid; grid-template-columns: 5.5em 1fr; gap: 8px 12px; align-items: center; }
+    .opt-lab { color: #b4a68c; font-size: 12px; letter-spacing: 0.12em; white-space: nowrap; }
+    .opt-grid .seg { display: flex; flex-wrap: wrap; gap: 6px; flex: none; }
+    .opt-grid .seg button {
+      appearance: none; flex: none; min-height: 30px; min-width: 0; padding: 0 12px;
+      border: 1px solid #3a3228; border-radius: 999px;
+      background: #1c1812; color: var(--paper);
+      font-size: 12px; letter-spacing: 0.06em; white-space: nowrap; box-shadow: none;
+    }
+    .opt-grid .seg button:last-child { border-right: 1px solid #3a3228; }
+    .opt-grid .seg button.on { background: #2a2217; color: var(--gold); border-color: var(--gold); }
+    .opt-inline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .opt-inline #pano-btn { font-size: 13px; padding: 8px 18px; }
+    @media (max-width: 560px) { .opt-grid { grid-template-columns: 1fr; gap: 4px; } .opt-lab { margin-top: 6px; } }
   </style>
 </head>
 <body>
@@ -344,24 +407,23 @@
         <button class="btn" id="tour-btn" type="button" title="相機自動走完三間展廳，可先預覽運鏡">導覽預覽 · G</button>
         <button class="btn" id="rec-btn" type="button" title="自動導覽並直接錄成影片檔，適合貼到 FB">導覽錄影 · R</button>
       </div>
-      <div class="tour-opt">
-        <span>展廳</span>
+      <div class="opt-panel">
+        <div class="opt-head">導覽／錄影設定</div>
+        <div class="opt-grid">
+          <span class="opt-lab">展廳</span>
         <div class="seg" id="pick-hall">
           <button type="button" data-hall="all">全部</button>
           <button type="button" data-hall="hall">主展間</button>
           <button type="button" data-hall="west">西廳</button>
           <button type="button" data-hall="east">東廳</button>
         </div>
-        <button class="btn" id="pano-btn" type="button" title="從展廳中央算出 360 環景圖，含 GPano 標記，FB 會當成 360 照片">360 全景輸出</button>
-      </div>
-      <div class="tour-opt">
-        <span>比例</span>
+          <span class="opt-lab">比例</span>
         <div class="seg" id="rec-ratio">
           <button type="button" data-ratio="4:5">4:5</button>
           <button type="button" data-ratio="1:1">1:1</button>
           <button type="button" data-ratio="16:9">16:9</button>
         </div>
-        <span>長度</span>
+          <span class="opt-lab">長度</span>
         <div class="seg" id="rec-len">
           <button type="button" data-len="30">30秒</button>
           <button type="button" data-len="45">45秒</button>
@@ -370,15 +432,32 @@
           <button type="button" data-len="120">120秒</button>
           <button type="button" data-len="180">180秒</button>
         </div>
-        <span>取樣</span>
+          <span class="opt-lab">取樣</span>
         <div class="seg" id="rec-pick">
           <button type="button" data-pick="some" title="依長度抽選 6～16 幅代表作">精選</button>
           <button type="button" data-pick="all" title="每一幅都走到並停留，長度改由實際路線決定（約 2～3 分鐘）">全部</button>
         </div>
-        <span>畫名</span>
+          <span class="opt-lab">畫名</span>
         <div class="seg" id="rec-cap">
           <button type="button" data-cap="1" title="停留看畫時，畫面下方淡入淡出顯示畫名">顯示</button>
           <button type="button" data-cap="0">不顯示</button>
+        </div>
+          <span class="opt-lab">錄影格式</span>
+        <div class="seg" id="rec-fmt">
+          <button type="button" data-vfmt="video" title="MP4（或 WebM），適合貼到 FB">影片</button>
+          <button type="button" data-vfmt="webp" title="動態 WebP：逐格輸出、12 fps、半解析度（例 540×675），不會漏格；可當動圖使用，FB 不會當影片">動態 WebP</button>
+        </div>
+        </div>
+        <div class="opt-head">360 全景</div>
+        <div class="opt-grid">
+          <span class="opt-lab">格式</span>
+          <div class="opt-inline">
+        <div class="seg" id="pano-fmt">
+          <button type="button" data-fmt="jpg" title="JPEG＋GPano 標記，FB／Google 相簿可辨識為 360 照片">JPG</button>
+          <button type="button" data-fmt="webp" title="WebP 檔案較小（約 JPG 的 6～7 成），同樣寫入 GPano；FB 上傳 360 建議仍用 JPG">WebP</button>
+        </div>
+            <button class="btn" id="pano-btn" type="button" title="從展廳中央算出 360 環景圖（依上方「展廳」選擇），含 GPano 標記，FB 會當成 360 照片">360 全景輸出</button>
+          </div>
         </div>
       </div>
       <p class="hint" id="load-progress">正在掛畫…</p>
@@ -392,6 +471,7 @@
         <span><b>1 2 3</b>牆面</span>
         <span><b>4 5 6 7</b>燈光</span>
         <span><b>H</b>顯示／隱藏選單</span>
+        <span><b>V</b>無人機 FPV</span>
       </div>
       <div class="howto" id="howto">
         <b>如何換畫與分享</b>
@@ -409,6 +489,11 @@
     <div class="topbar">
       <div class="brand"><small>三間 · 三十幅</small><strong>我的展廳</strong></div>
       <div class="console" id="console">
+        <div class="console-top">
+          <button id="fly-btn" type="button" title="果蠅模式：自動在展廳裡自由飛行、停在畫前；再按一次、F、Esc 或按 WASD 即結束"><span class="fly-ico" aria-hidden="true">🪰</span>Fly · F</button>
+          <button id="drone-btn" type="button" title="無人機 FPV：滑鼠移到畫面邊緣轉向／升降，滾輪或 W/S 前進後退；停手會自動正對最近的畫，點畫可進入畫中。V／Esc／右鍵結束"><span class="fly-ico" aria-hidden="true">🚁</span>Drone FPV · V</button>
+          <small id="fly-state"></small>
+        </div>
         <div class="console-row">
           <span class="console-lab">牆面</span>
           <div class="seg" id="wall-bar">
@@ -500,6 +585,14 @@
     </div>
   </div>
 
+  <div id="drone-osd" aria-hidden="true">
+    <div class="d-edge"></div>
+    <div class="d-box"><i></i><i></i><i></i><i></i></div>
+    <div class="d-ret"></div>
+    <div class="d-top"><b>● DRONE FPV</b><span id="d-mode">手動飛行</span></div>
+    <div class="d-bot"><span>ALT <b id="d-alt">0.0</b> m</span><span>SPD <b id="d-spd">0.0</b> m/s</span><span>THR <b id="d-thr">0</b>%</span><span>邊緣轉向 · 滾輪油門 · 點畫進入</span></div>
+  </div>
+  <div id="drone-flash"></div>
   <div id="tour-hud">
     <span class="dot"></span>
     <span id="tour-state">導覽中</span>
@@ -562,7 +655,7 @@ function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"f
 
 </script>
   <script>
-window.GALLERY_ID = "gmu2hnx9njs65";
+window.GALLERY_ID = "gmu3dmqe4iji1";
 window.GALLERY_VIEWONLY = 1;
 window.GALLERY_META = {"10":{"title":"橙暉泊岸","artist":"作者姓名","year":"2026","description":"橘紅晚霞下的岸邊船影，暖冷色交融。","frame":"gold","file":"499525922_24099163519668510_914386671279051053_n.jpg","shape":"auto","matte":"cream"},"11":{"title":"碧湖遠山","artist":"作者姓名","year":"2026","description":"藍紫山巒環抱碧綠湖水，一艘小船劃開水面。","frame":"gold","file":"496106392_24076634528588076_4122960388749669405_n.jpg","shape":"auto","matte":"cream"},"12":{"title":"淺灣輕舟","artist":"作者姓名","year":"2026","description":"淡彩山影與寬闊淺灘，構圖疏朗留白。","frame":"gold","file":"498216407_24072349439016585_9200720137420056177_n.jpg","shape":"auto","matte":"cream"},"13":{"title":"山城漁港","artist":"作者姓名","year":"2026","description":"依山而建的白色聚落，港內舟楫密集。","frame":"gold","file":"497716218_24072349415683254_8222053977739845379_n.jpg","shape":"auto","matte":"cream"},"14":{"title":"都會港灣","artist":"作者姓名","year":"2026","description":"高樓群立於霧色之中，貨船橫過前景。","frame":"gold","file":"498216792_24082997344618461_1652211543148245851_n.jpg","shape":"auto","matte":"cream"},"15":{"title":"夕照孤峰","artist":"作者姓名","year":"2026","description":"赭紅天光籠罩單一山形，水岸一線橫展。","frame":"gold","file":"496147882_24050524071199122_2636190081090988672_n.jpg","shape":"auto","matte":"cream"},"16":{"title":"藍嶺光影","artist":"作者姓名","year":"2026","description":"一道斜光劃過藍色山脊，碼頭沉在陰影裡。","frame":"gold","file":"498305377_24076634501921412_7121941991090287194_n.jpg","shape":"auto","matte":"cream"},"17":{"title":"峽江垂壁","artist":"作者姓名","year":"2026","description":"直幅構圖，峭壁夾江而下，船隻如豆。","frame":"gold","file":"496923451_24076634885254707_4819293425282869958_n.jpg","shape":"auto","matte":"cream"},"18":{"title":"翠峽流光","artist":"作者姓名","year":"2026","description":"青綠岩壁與碧藍江水，直幅拉出深度。","frame":"gold","file":"496322420_24076634878588041_8165406835109292942_n.jpg","shape":"auto","matte":"cream"},"19":{"title":"青潭映山","artist":"作者姓名","year":"2026","description":"青綠潭水倒映褐紫山體，色彩飽和濃烈。","frame":"gold","file":"497447872_24093518133566382_4651113853856868446_n.jpg","shape":"auto","matte":"cream"},"20":{"title":"金城夕照","artist":"作者姓名","year":"2026","description":"橘金天色下的城市天際線，橋影跨越水面。","frame":"gold","file":"496922639_24076634901921372_7114317489430995684_n.jpg","shape":"auto","matte":"cream"},"21":{"title":"坡城小橋","artist":"作者姓名","year":"2026","description":"山坡聚落與長橋相連，綠意層層推遠。","frame":"gold","file":"496097028_24050524064532456_7217012932314183870_n.jpg","shape":"auto","matte":"cream"},"22":{"title":"海岸古鎮","artist":"作者姓名","year":"2026","description":"土黃色老屋臨海而立，松綠海水明亮。","frame":"gold","file":"499134171_24076634925254703_8209746533653266460_n.jpg","shape":"auto","matte":"cream"},"23":{"title":"臨水舊城","artist":"作者姓名","year":"2026","description":"舊城牆與起重機並存，水色偏黃綠。","frame":"gold","file":"498216407_24072349439016585_9200720137420056177_n.jpg","shape":"auto","matte":"cream"},"24":{"title":"灰霧鐘塔","artist":"作者姓名","year":"2026","description":"灰霧中的尖塔輪廓，遠山淡去，水面如鏡。","frame":"gold","file":"499028735_24099163846335144_8615675321484536799_n.jpg","shape":"auto","matte":"cream"},"25":{"title":"紫山蜿流","artist":"作者姓名","year":"2026","description":"紫調山勢連綿，河道蜿蜒穿過谷地。","frame":"gold","file":"496147882_24050524071199122_2636190081090988672_n.jpg","shape":"auto","matte":"cream"},"26":{"title":"金霧湖岸","artist":"作者姓名","year":"2026","description":"金黃霧氣瀰漫湖岸，燈桿細如針線。","frame":"gold","file":"496097028_24050524064532456_7217012932314183870_n.jpg","shape":"auto","matte":"cream"},"27":{"title":"橘空古堡","artist":"作者姓名","year":"2026","description":"橘紅天空下的紫色城堡剪影，倒影搖曳。","frame":"gold","file":"496093317_24050523991199130_4209475460857933552_n.jpg","shape":"auto","matte":"cream"},"28":{"title":"雪峰湖村","artist":"作者姓名","year":"2026","description":"積雪山頭映入藍湖，湖畔小屋成排。","frame":"gold","file":"498246582_24099163619668500_2493698455498672642_n.jpg","shape":"auto","matte":"cream"},"29":{"title":"翠原雪嶺","artist":"作者姓名","year":"2026","description":"雪嶺之下的翠綠草原，水色近松石綠。","frame":"gold","file":"498204954_24099163796335149_903623002901172274_n.jpg","shape":"auto","matte":"cream"},"30":{"title":"墨染山影","artist":"作者姓名","year":"2026","description":"深藍山體與墨色渲染前景，水痕自然奔放。","frame":"gold","file":"495019530_23949700191281511_6963997887230281301_n.jpg","shape":"auto","matte":"cream"},"01":{"title":"山前村舍","artist":"作者姓名","year":"2026","description":"青綠原野上的粉牆小屋，遠山壓低天色，色塊率性鮮明。","frame":"gold","file":"501016904_24175051962079665_3803560285906099164_n.jpg","shape":"auto","matte":"white"},"02":{"title":"碼頭晨色","artist":"作者姓名","year":"2026","description":"電線桿與紅白船影交錯，晨霧中的碼頭初醒。","frame":"gold","file":"494103863_23949700134614850_3642836927369930298_n.jpg","shape":"auto","matte":"cream"},"03":{"title":"漁港泊舟","artist":"作者姓名","year":"2026","description":"白色漁船群聚岸邊，山巒橫臥，橘藍點景跳色。","frame":"silver","file":"501197867_24175052018746326_8660404394011046485_n.jpg","shape":"land","matte":"gray"},"04":{"title":"紫嶺薄霧","artist":"作者姓名","year":"2026","description":"紫灰山脈籠罩薄霧，水面留白透亮。","frame":"gold","file":"494504288_23949700307948166_8181563575209128341_n.jpg","shape":"auto","matte":"cream"},"05":{"title":"霧港孤舟","artist":"作者姓名","year":"2026","description":"低彩度灰調港灣，長堤伸入水中，一舟靜泊。","frame":"gold","file":"500916346_24175052022079659_7420415705181582932_n.jpg","shape":"auto","matte":"cream"},"06":{"title":"工港吊車","artist":"作者姓名","year":"2026","description":"吊桿與人影構成工業港口的節奏，冷藍為主調。","frame":"gold","file":"497848986_24050524257865770_2911539763173266057_n.jpg","shape":"auto","matte":"cream"},"07":{"title":"原野晴日","artist":"作者姓名","year":"2026","description":"翠綠草原與白色屋列，遠山淡青，光線明快。","frame":"gold","file":"498246582_24099163619668500_2493698455498672642_n.jpg","shape":"auto","matte":"cream"},"08":{"title":"灰港暮靄","artist":"作者姓名","year":"2026","description":"煙灰色港區起重機林立，霧氣吞沒遠景。","frame":"gold","file":"499028735_24099163846335144_8615675321484536799_n.jpg","shape":"auto","matte":"cream"},"09":{"title":"暮林金光","artist":"作者姓名","year":"2026","description":"逆光樹叢剪影，金黃天色映入平靜水面。","frame":"gold","file":"497731524_24082997551285107_8880391735915873611_n.jpg","shape":"auto","matte":"cream"}};
 window.GALLERY_HALL = {"name":"我的展廳","hallName":"主展間","westName":"西廳","eastName":"東廳","wall":2,"light":1,"pitch":4,"hangY":2.15,"labelY":1.5,"labelGap":0.15,"matW":0.16,"eyeH":1.64,"speed":7.4};
@@ -2292,7 +2385,7 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
     }
 
     function movePlayer(dt) {
-      if (!exploring || uiBlocked() || TOUR.on) return;
+      if (!exploring || uiBlocked() || TOUR.on || FLY.on || DRONE.on) return;
       const forward = TMP.fwd, right = TMP.right, dir = TMP.dir;
       camera.getWorldDirection(forward); forward.y = 0; forward.normalize();
       right.crossVectors(forward, TMP.up).normalize();
@@ -2348,6 +2441,13 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
 
     function pick() {
       if (dragging) return;                      // 拖放瞄準中：highlight 由 dragAim 決定
+      if (DRONE.on) {
+        if (!exploring || uiBlocked() || DRONE.mode === "dive") { if (lookTarget || lastLookOn) setLook(null); return; }
+        const hv = DRONE.mIn ? artAtXY(DRONE.cx, DRONE.cy) : null;
+        setLook(hv, "點一下進入畫中 · ");
+        renderer.domElement.style.cursor = hv ? "pointer" : "crosshair";
+        return;
+      }
       if (!exploring || uiBlocked() || (!locked && !TOUCH)) { if (lookTarget || lastLookOn) setLook(null); return; }
       setLook(castArt(TMP.center, 6.5));
     }
@@ -2570,8 +2670,11 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       if (!CAP.mesh) return;
       CAP.mesh.visible = false; CAP.mesh.material.opacity = 0; CAP.cur = -1;
     }
-    const REC = { on: false, mr: null, chunks: [], ext: "webm", w: 0, h: 0 };
+    const REC = { on: false, mr: null, chunks: [], ext: "webm", w: 0, h: 0,
+      fmt: lsGet("gallery-rec-fmt") === "webp" ? "webp" : "video",
+      webp: false, frames: [], busy: false, job: null, gcv: null, fps: 12, scale: 0.5 };
     let panoBusy = false;
+    const PANO = { fmt: lsGet("gallery-pano-fmt") === "webp" ? "webp" : "jpg" };
     const REC_SIZES = { "4:5": [1080, 1350], "1:1": [1080, 1080], "16:9": [1920, 1080] };
 
     function tourAim(pos, target) {
@@ -2686,7 +2789,14 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
     function tourStart(record) {
       if (TOUR.on) return;
       if (!artworks.length) { toast("展廳還在掛畫，請稍候。", true); return; }
-      if (record && !recSupported()) { toast("這個瀏覽器不支援畫面錄影，請改用螢幕錄影。", true); record = false; }
+      if (FLY.on) flyStop();
+      if (DRONE.on) droneStop();
+      if (record && REC.fmt === "webp" && !webpEncodeOK()) {
+        toast("這個瀏覽器無法產生 WebP，改用影片錄影。", true);
+        REC.fmt = "video";
+        document.querySelectorAll('#rec-fmt [data-vfmt]').forEach((b) => b.classList.toggle("on", b.dataset.vfmt === "video"));
+      }
+      if (record && REC.fmt !== "webp" && !recSupported()) { toast("這個瀏覽器不支援畫面錄影，請改用螢幕錄影。", true); record = false; }
       closeArt();
       if (!exploring) enter();
       if (document.pointerLockElement) document.exitPointerLock();
@@ -2737,6 +2847,13 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       document.querySelectorAll('#rec-ratio [data-ratio]').forEach((b) => b.classList.toggle("on", b.dataset.ratio === TOUR.ratio));
       document.querySelectorAll('#rec-len [data-len]').forEach((b) => b.classList.toggle("on", +b.dataset.len === TOUR.len));
       document.querySelectorAll('#pick-hall [data-hall]').forEach((b) => b.classList.toggle("on", b.dataset.hall === TOUR.hall));
+      segPick("rec-fmt", "vfmt", (v) => {
+        REC.fmt = v === "webp" ? "webp" : "video"; lsSet("gallery-rec-fmt", REC.fmt);
+        if (REC.fmt === "webp") toast("動態 WebP：逐格輸出（12 fps、半解析度），產生時間比實際長度久，檔案也比影片大，請耐心等候。", true);
+      });
+      document.querySelectorAll('#rec-fmt [data-vfmt]').forEach((b) => b.classList.toggle("on", b.dataset.vfmt === REC.fmt));
+      segPick("pano-fmt", "fmt", (v) => { PANO.fmt = v === "webp" ? "webp" : "jpg"; lsSet("gallery-pano-fmt", PANO.fmt); });
+      document.querySelectorAll('#pano-fmt [data-fmt]').forEach((b) => b.classList.toggle("on", b.dataset.fmt === PANO.fmt));
       if ($("pano-btn")) $("pano-btn").onclick = () => panoExport();
       if ($("tour-btn")) $("tour-btn").onclick = () => tourStart(false);
       if ($("rec-btn")) $("rec-btn").onclick = () => tourStart(true);
@@ -2783,6 +2900,16 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       markShadow();
     }
     function recStart() {
+      if (REC.fmt === "webp") {
+        REC.on = true; REC.webp = true;
+        recSizeOn();
+        REC.frames = []; REC.busy = false; REC.job = null;
+        REC.gcv = document.createElement("canvas");
+        REC.gcv.width = Math.round(REC.w * REC.scale);
+        REC.gcv.height = Math.round(REC.h * REC.scale);
+        $("tour-state").textContent = "錄影中 · WebP";
+        return;
+      }
       try {
         REC.on = true;
         recSizeOn();
@@ -2804,6 +2931,7 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       }
     }
     function recStop() {
+      if (REC.webp) { if (REC.on) recSaveWebP(); return; }
       const mr = REC.mr;
       REC.mr = null;
       if (mr && mr.state !== "inactive") { try { mr.stop(); } catch (e) {} }
@@ -2815,6 +2943,9 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       REC.on = false;
       recSizeOff();
       const name = `${fileSafe(HALL.name)}-導覽-${TOUR.ratio.replace(":", "x")}-${mmdd()}.${REC.ext}`;
+      await recDeliver(blob, name);
+    }
+    async function recDeliver(blob, name, extra) {
       const mb = (blob.size / 1048576).toFixed(1);
       let shared = false;
       if (TOUCH && typeof File === "function" && navigator.canShare) {
@@ -2830,7 +2961,543 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() => URL.revokeObjectURL(url), 60000);
       }
-      toast(`已產生「${name}」（${mb} MB）`);
+      toast(`已產生「${name}」（${mb} MB）${extra || ""}`);
+    }
+
+    /* ---- v26 動態 WebP：逐格固定步長算圖 → canvas 編 WebP → 自組 ANIM/ANMF ---- */
+    let WEBP_OK = null;
+    function webpEncodeOK() {
+      if (WEBP_OK === null) {
+        try { const c = document.createElement("canvas"); c.width = c.height = 1; WEBP_OK = c.toDataURL("image/webp").indexOf("data:image/webp") === 0; }
+        catch (e) { WEBP_OK = false; }
+      }
+      return WEBP_OK;
+    }
+    function riffChunk(id, payload) {
+      const pad = payload.length & 1;
+      const c = new Uint8Array(8 + payload.length + pad);
+      for (let i = 0; i < 4; i++) c[i] = id.charCodeAt(i);
+      const n = payload.length;
+      c[4] = n & 255; c[5] = (n >> 8) & 255; c[6] = (n >> 16) & 255; c[7] = (n >>> 24) & 255;
+      c.set(payload, 8);
+      return c;
+    }
+    function put24(a, o, v) { a[o] = v & 255; a[o + 1] = (v >> 8) & 255; a[o + 2] = (v >> 16) & 255; }
+    /* 從單張 WebP 取出影像資料（ALPH / VP8 / VP8L） */
+    function webpFrameData(buf) {
+      const tag = (o) => String.fromCharCode(buf[o], buf[o + 1], buf[o + 2], buf[o + 3]);
+      if (tag(0) !== "RIFF" || tag(8) !== "WEBP") return null;
+      const keep = [];
+      let alpha = false, len = 0;
+      for (let o = 12; o + 8 <= buf.length;) {
+        const sz = (buf[o + 4] | (buf[o + 5] << 8) | (buf[o + 6] << 16) | (buf[o + 7] << 24)) >>> 0;
+        const end = Math.min(buf.length, o + 8 + sz + (sz & 1));
+        const id = tag(o);
+        if (id === "ALPH" || id === "VP8 " || id === "VP8L") {
+          keep.push(buf.slice(o, end)); len += end - o;
+          if (id === "ALPH" || id === "VP8L") alpha = alpha || id === "ALPH";
+        }
+        o = end;
+      }
+      if (!keep.length) return null;
+      const data = new Uint8Array(len);
+      let p = 0;
+      keep.forEach((k) => { data.set(k, p); p += k.length; });
+      return { data, alpha };
+    }
+    function buildAnimWebP(frames, W, H, fps) {
+      const parts = [];
+      const x = new Uint8Array(10);
+      x[0] = 0x02 | (frames.some((f) => f.alpha) ? 0x10 : 0);
+      put24(x, 4, W - 1); put24(x, 7, H - 1);
+      parts.push(riffChunk("VP8X", x));
+      parts.push(riffChunk("ANIM", new Uint8Array([0, 0, 0, 255, 0, 0])));   /* 背景黑、無限循環 */
+      frames.forEach((f, i) => {
+        const dur = Math.max(1, Math.round((i + 1) * 1000 / fps) - Math.round(i * 1000 / fps));
+        const pl = new Uint8Array(16 + f.data.length);
+        put24(pl, 0, 0); put24(pl, 3, 0);
+        put24(pl, 6, W - 1); put24(pl, 9, H - 1);
+        put24(pl, 12, dur);
+        pl[15] = 0x02;                                  /* 不混合、不清除 */
+        pl.set(f.data, 16);
+        parts.push(riffChunk("ANMF", pl));
+      });
+      const total = 12 + parts.reduce((a, q) => a + q.length, 0);
+      const out = new Uint8Array(total);
+      out.set([82, 73, 70, 70], 0);
+      const rs = total - 8;
+      out[4] = rs & 255; out[5] = (rs >> 8) & 255; out[6] = (rs >> 16) & 255; out[7] = (rs >>> 24) & 255;
+      out.set([87, 69, 66, 80], 8);
+      let o = 12;
+      parts.forEach((q) => { out.set(q, o); o += q.length; });
+      return new Blob([out], { type: "image/webp" });
+    }
+    function recGrab() {
+      const g = REC.gcv;
+      if (!g) return;
+      const ctx = g.getContext("2d");
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, g.width, g.height);
+      ctx.drawImage(renderer.domElement, 0, 0, g.width, g.height);   /* 同一個 frame 內讀，免 preserveDrawingBuffer */
+      REC.busy = true;
+      REC.job = new Promise((res) => {
+        g.toBlob(async (b) => {
+          try {
+            if (b) {
+              const f = webpFrameData(new Uint8Array(await b.arrayBuffer()));
+              if (f) REC.frames.push(f);
+            }
+          } catch (e) {}
+          REC.busy = false;
+          res();
+        }, "image/webp", 0.8);
+      });
+      $("tour-state").textContent = "錄影中 · WebP " + (REC.frames.length + 1) + " 格";
+    }
+    async function recSaveWebP() {
+      REC.on = false;
+      const g = REC.gcv;
+      recSizeOff();
+      try {
+        toast("正在組合動態 WebP…");
+        if (REC.job) await REC.job;
+        const frames = REC.frames;
+        REC.frames = []; REC.gcv = null; REC.job = null;
+        if (!frames.length || !g) { toast("沒有錄到任何畫面。", true); return; }
+        const blob = buildAnimWebP(frames, g.width, g.height, REC.fps);
+        const name = `${fileSafe(HALL.name)}-導覽-${TOUR.ratio.replace(":", "x")}-${mmdd()}.webp`;
+        await recDeliver(blob, name, ` · ${g.width}×${g.height} · ${frames.length} 格 · ${REC.fps} fps`);
+      } catch (e) {
+        toast("WebP 輸出失敗：" + ((e && e.message) || e), true);
+      } finally {
+        REC.webp = false; REC.busy = false;
+      }
+    }
+
+    /* ================= v27 Fly 果蠅模式 =================
+       狀態機：wander（房內隨機亂飛）→ approach（飛向某幅畫）→ perch（停在畫前 0.6 m 看 2～3.5 秒）
+       轉向用「目標吸引 + 雜訊擺動」，碰牆反彈；跨廳走門洞中心點。任何 WASD／滾輪／點擊即交還控制。 */
+    const FLY = { on: false, pos: null, vel: null, path: [], mode: "wander", hold: 0, art: null,
+      t: 0, yaw: 0, pitch: 0, roll: 0, dash: 0, seen: [], exit: null };
+    const FLY_SPEED = 1.6, FLY_DASH = 3.6;
+    function flyRoomBox(id) {
+      const r = LAYOUT.find((x) => x.id === id);
+      const m = 0.45;
+      return r ? { id: r.id, minX: r.cx - r.w / 2 + m, maxX: r.cx + r.w / 2 - m, minZ: r.cz - r.d / 2 + m, maxZ: r.cz + r.d / 2 - m,
+        minY: 0.45, maxY: Math.min(r.h - 0.6, 5.2) } : null;
+    }
+    function flyRoomAt(p) {
+      for (const r of LAYOUT) {
+        if (Math.abs(p.x - r.cx) <= r.w / 2 && Math.abs(p.z - r.cz) <= r.d / 2) return r.id;
+      }
+      return null;
+    }
+    /* 允許的空間：三個房間（內縮）＋兩個門洞通道 */
+    function flyFree(p) {
+      for (const r of LAYOUT) {
+        const b = flyRoomBox(r.id);
+        if (p.x >= b.minX && p.x <= b.maxX && p.z >= b.minZ && p.z <= b.maxZ && p.y >= b.minY && p.y <= b.maxY) return true;
+      }
+      const hw = DOOR_W / 2 - 0.35;
+      if (Math.abs(Math.abs(p.x) - 14) <= 0.9 && Math.abs(p.z) <= hw && p.y >= 0.45 && p.y <= DOOR_H - 0.4) return true;
+      return false;
+    }
+    function flyRand(a, b) { return a + Math.random() * (b - a); }
+    function flyWanderPoint(roomId) {
+      const b = flyRoomBox(roomId) || flyRoomBox("hall");
+      return new THREE.Vector3(flyRand(b.minX + 1, b.maxX - 1), flyRand(1.0, Math.min(b.maxY, 4.2)), flyRand(b.minZ + 1, b.maxZ - 1));
+    }
+    function flyDoorPath(from, to) {
+      if (from === to || !from || !to) return [];
+      const leg = (sign) => [new THREE.Vector3(sign * 11.8, 2.0, 0), new THREE.Vector3(sign * 14, 2.0, 0), new THREE.Vector3(sign * 16.2, 2.0, 0)];
+      if (from === "hall") return leg(to === "west" ? -1 : 1);
+      if (to === "hall") return leg(from === "west" ? -1 : 1).reverse();
+      return leg(from === "west" ? -1 : 1).reverse().concat(leg(to === "west" ? -1 : 1));   /* 西 ↔ 東：經主展間 */
+    }
+    function flyPlan() {
+      const here = flyRoomAt(FLY.pos) || curRoomId || "hall";
+      const r = Math.random();
+      FLY.path = [];
+      if (r < 0.55 && artworks.length) {
+        /* 挑一幅最近沒看過的畫；七成在同廳 */
+        const pool0 = artworks.filter((a) => FLY.seen.indexOf(a) < 0);
+        const pool = pool0.length ? pool0 : artworks;
+        const same = pool.filter((a) => a.room === here);
+        const list = (same.length && Math.random() < 0.7) ? same : pool;
+        const art = list[Math.floor(Math.random() * list.length)];
+        const inward = art.stand.clone().sub(art.lookAt); inward.y = 0; inward.normalize();
+        const perch = art.lookAt.clone().addScaledVector(inward, flyRand(0.55, 0.85));
+        perch.y = art.lookAt.y + flyRand(-0.25, 0.2);
+        perch.x += inward.z * flyRand(-0.25, 0.25);
+        perch.z -= inward.x * flyRand(-0.25, 0.25);
+        const front = art.lookAt.clone().addScaledVector(inward, 2.2); front.y = perch.y + 0.3;
+        FLY.path = flyDoorPath(here, art.room).concat([front, perch]);
+        FLY.art = art;
+        FLY.mode = "approach";
+      } else if (r < 0.7) {
+        const rooms = ["hall", "west", "east"].filter((x) => x !== here);
+        const to = rooms[Math.floor(Math.random() * rooms.length)];
+        FLY.path = flyDoorPath(here, to).concat([flyWanderPoint(to)]);
+        FLY.art = null; FLY.mode = "wander";
+      } else {
+        const n = 1 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < n; i++) FLY.path.push(flyWanderPoint(here));
+        FLY.art = null; FLY.mode = "wander";
+        if (Math.random() < 0.35) FLY.dash = flyRand(0.4, 0.9);   /* 偶爾衝刺 */
+      }
+    }
+    function flySetState(txt) { const el = $("fly-state"); if (el) el.textContent = txt; }
+    function flyStart() {
+      if (FLY.on) return;
+      if (!artworks.length) { toast("展廳還在掛畫，請稍候。", true); return; }
+      if (TOUR.on) tourStop();
+      if (DRONE.on) droneStop();
+      closeArt();
+      if (!exploring) enter();
+      if (document.pointerLockElement) document.exitPointerLock();
+      move = { f: 0, b: 0, l: 0, r: 0, run: 0 };
+      wheelBoost = 0;
+      FLY.on = true;
+      FLY.pos = camera.position.clone();
+      FLY.pos.y = PLAYER.h;
+      FLY.vel = new THREE.Vector3(-Math.sin(yaw), 0.3, -Math.cos(yaw)).multiplyScalar(FLY_SPEED * 0.6);
+      FLY.yaw = yaw; FLY.pitch = pitch; FLY.roll = 0; FLY.t = 0; FLY.hold = 0; FLY.dash = 0; FLY.seen = [];
+      flyPlan();
+      document.body.classList.add("flying");
+      $("fly-btn").classList.add("on");
+      flySetState("飛行中 · F／Esc 結束");
+      toast("🪰 果蠅起飛！按 F、Esc、WASD 或點畫面即可接手。");
+    }
+    function flyStop() {
+      if (!FLY.on) return;
+      FLY.on = false;
+      document.body.classList.remove("flying");
+      $("fly-btn").classList.remove("on");
+      flySetState("");
+      /* 降落回人眼高度；若停在牆邊超出可走範圍，往房間中心退回 */
+      const p = camera.position;
+      p.y = PLAYER.h;
+      const rid = flyRoomAt(p) || curRoomId || "hall";
+      const r = LAYOUT.find((x) => x.id === rid);
+      for (let i = 0; i < 60 && !inside(p.x, p.z); i++) {
+        p.x += (r.cx - p.x) * 0.08;
+        p.z += (r.cz - p.z) * 0.08;
+      }
+      setCamAngles(FLY.yaw, Math.max(-0.4, Math.min(0.4, FLY.pitch)));
+    }
+    function flyToggle() { if (FLY.on) flyStop(); else flyStart(); }
+    function flyTick(dt) {
+      if (!exploring) return;
+      FLY.t += dt;
+      const t = FLY.t, pos = FLY.pos, vel = FLY.vel;
+      let lookYaw, lookPitch;
+      if (FLY.mode === "perch") {
+        /* 停在畫前：幾乎不動，只有細微抖動，視線對準畫 */
+        FLY.hold -= dt;
+        vel.multiplyScalar(Math.exp(-8 * dt));
+        pos.addScaledVector(vel, dt);
+        const a = tourAim(pos, FLY.art.lookAt);
+        lookYaw = a.yaw + Math.sin(t * 1.7) * 0.05;
+        lookPitch = a.pitch + Math.sin(t * 2.3) * 0.03;
+        if (FLY.hold <= 0) {
+          FLY.seen.push(FLY.art);
+          if (FLY.seen.length > 12) FLY.seen.shift();
+          /* 起飛：先往後彈開 */
+          const back = FLY.art.stand.clone().sub(FLY.art.lookAt); back.y = 0; back.normalize();
+          vel.copy(back).multiplyScalar(2.4); vel.y = 0.8;
+          FLY.dash = 0.35;
+          flyPlan();
+          flySetState("飛行中 · F／Esc 結束");
+        }
+      } else {
+        if (!FLY.path.length) flyPlan();
+        const target = FLY.path[0];
+        const to = TMP.dir.copy(target).sub(pos);
+        const dist = to.length();
+        const last = FLY.path.length === 1;
+        let spd = FLY.dash > 0 ? FLY_DASH : FLY_SPEED;
+        FLY.dash = Math.max(0, FLY.dash - dt);
+        if (last && FLY.mode === "approach") spd *= Math.min(1, 0.25 + dist / 1.6);   /* 接近畫時減速 */
+        const desired = to.normalize().multiplyScalar(spd);
+        /* 果蠅式擺動：多頻率正弦疊加的側向與上下雜訊 */
+        const wob = (FLY.mode === "approach" && last && dist < 1.2) ? 0.25 : 1;
+        desired.x += (Math.sin(t * 3.1) + 0.6 * Math.sin(t * 7.3 + 1.3)) * 0.55 * wob;
+        desired.z += (Math.cos(t * 2.7) + 0.6 * Math.sin(t * 6.1 + 0.4)) * 0.55 * wob;
+        desired.y += (Math.sin(t * 4.3) + 0.5 * Math.cos(t * 9.7)) * 0.35 * wob;
+        vel.lerp(desired, 1 - Math.exp(-3.2 * dt));
+        /* 移動＋碰牆反彈（逐軸） */
+        const nx = pos.x + vel.x * dt, ny = pos.y + vel.y * dt, nz = pos.z + vel.z * dt;
+        TMP.fwd.set(nx, pos.y, pos.z);
+        if (flyFree(TMP.fwd)) pos.x = nx; else vel.x *= -0.6;
+        TMP.fwd.set(pos.x, ny, pos.z);
+        if (flyFree(TMP.fwd)) pos.y = ny; else vel.y *= -0.6;
+        TMP.fwd.set(pos.x, pos.y, nz);
+        if (flyFree(TMP.fwd)) pos.z = nz; else vel.z *= -0.6;
+        FLY.segT = (FLY.segT || 0) + dt;
+        if (FLY.segT > 10 && !(last && FLY.mode === "approach" && dist < 0.9)) { FLY.segT = 0; flyPlan(); }   /* 卡住就換目標 */
+        else if (dist < (last ? 0.18 : 0.6) || (last && FLY.mode === "approach" && FLY.segT > 10)) {
+          FLY.segT = 0;
+          FLY.path.shift();
+          if (!FLY.path.length) {
+            if (FLY.mode === "approach" && FLY.art) {
+              FLY.mode = "perch";
+              FLY.hold = flyRand(2.2, 3.6);
+              flySetState("停在「" + (FLY.art.title || "畫作") + "」");
+            } else flyPlan();
+          }
+        }
+        /* 頭朝飛行方向；接近畫時提前轉向畫 */
+        const hv = Math.hypot(vel.x, vel.z);
+        if (FLY.mode === "approach" && last && dist < 2.6) {
+          const a = tourAim(pos, FLY.art.lookAt);
+          lookYaw = a.yaw; lookPitch = a.pitch;
+        } else {
+          lookYaw = hv > 0.05 ? Math.atan2(-vel.x, -vel.z) : FLY.yaw;
+          lookPitch = Math.atan2(vel.y, Math.max(0.3, hv)) * 0.6;
+        }
+      }
+      /* 平滑轉向 + 依轉彎角速度側傾 */
+      let dy = lookYaw - FLY.yaw;
+      while (dy > Math.PI) dy -= Math.PI * 2;
+      while (dy < -Math.PI) dy += Math.PI * 2;
+      const k = 1 - Math.exp(-3.5 * dt);
+      FLY.yaw += dy * k;
+      FLY.pitch += (Math.max(-1.1, Math.min(1.1, lookPitch)) - FLY.pitch) * k;
+      const rollTarget = Math.max(-0.35, Math.min(0.35, -dy * 0.6)) + Math.sin(t * 11) * 0.012;
+      FLY.roll += (rollTarget - FLY.roll) * (1 - Math.exp(-4 * dt));
+      /* 翅膀震動造成的高頻微抖 */
+      const buzz = FLY.mode === "perch" ? 0.002 : 0.006;
+      camera.position.set(pos.x + Math.sin(t * 53) * buzz, pos.y + Math.sin(t * 61 + 1) * buzz, pos.z + Math.cos(t * 47) * buzz);
+      yaw = FLY.yaw; pitch = FLY.pitch;
+      camera.rotation.set(FLY.pitch, FLY.yaw, FLY.roll, "YXZ");
+    }
+
+
+    /* ================= v29 Drone FPV 無人機模式 =================
+       滑鼠控制：游標推到畫面邊緣（中央 45% 為死區）→ 左右轉向／上下升降；滾輪＝油門。
+       W/S 前後、A/D 橫移、Space/E 上升、C/Q 下降、Shift 加速。
+       停手 0.5 秒 → 自動飛到最近一幅畫的正前方「賞畫距離」（畫框剛好填滿視野）並正對。
+       點畫 → 俯衝進入畫中（FOV 收窄＋閃光）→ 開大圖；關閉大圖即退回賞畫位置。 */
+    const DRONE = { on: false, pos: null, vel: null, yaw: 0, pitch: 0, roll: 0, thr: 0, ku: 0,
+      cx: 0, cy: 0, mx: 0, my: 0, mIn: false, mode: "free", art: null, lock: null, idle: 0,
+      dive: null, t: 0, fov: 68, osdT: 0 };
+    const DRONE_MAX = 4.2;
+    function droneInward(art) {
+      const v = art.stand.clone().sub(art.lookAt); v.y = 0; return v.normalize();
+    }
+    function droneViewDist(art) {
+      const vf = camera.fov * Math.PI / 360;
+      const hf = Math.atan(Math.tan(vf) * camera.aspect);
+      const w = (art.pw || 2.44) * 1.12, h = (art.ph || 3.05) * 1.12;
+      return Math.max(1.2, Math.min(4.5, Math.max(h / 2 / Math.tan(vf), w / 2 / Math.tan(hf))));
+    }
+    function droneSpot(art) {
+      const inward = droneInward(art);
+      const p = art.lookAt.clone().addScaledVector(inward, droneViewDist(art));
+      for (let i = 0; i < 40 && !flyFree(p); i++) p.addScaledVector(inward, -0.08);
+      return { p, yaw: Math.atan2(inward.x, inward.z) };
+    }
+    function droneFindArt() {
+      const D = DRONE, pos = D.pos, here = flyRoomAt(pos);
+      const fx = -Math.sin(D.yaw), fz = -Math.cos(D.yaw);
+      let best = null, bs = 1e9;
+      for (const a of artworks) {
+        if (here && a.room !== here) continue;
+        const inw = droneInward(a);
+        const rx = pos.x - a.lookAt.x, rz = pos.z - a.lookAt.z;
+        if (rx * inw.x + rz * inw.z < 0.4) continue;          /* 必須在畫的正面 */
+        const d = Math.hypot(rx, rz);
+        if (d > 20) continue;
+        const c = (-rx * fx - rz * fz) / (d || 1);             /* 與機頭方向夾角 */
+        if (c < 0.6) continue;
+        const sc = d + (1 - c) * 10;
+        if (sc < bs) { bs = sc; best = a; }
+      }
+      return best;
+    }
+    function droneMode(m, art) {
+      DRONE.mode = m;
+      const t = art && art.title ? "「" + art.title + "」" : "";
+      const txt = m === "align" ? "對正中 " + t : m === "lock" ? "已對正 " + t + " · 點畫進入" :
+        m === "dive" ? "進入畫中…" : m === "inside" ? "畫中" : "手動飛行";
+      $("d-mode").textContent = txt;
+      flySetState(m === "free" ? "無人機 · V／Esc 結束" : txt);
+      $("drone-osd").classList.toggle("lock", m === "lock");
+    }
+    function droneStart() {
+      if (DRONE.on) return;
+      if (TOUCH) { toast("Drone FPV 需要滑鼠操作，平板請用 Fly 模式。", true); return; }
+      if (!artworks.length) { toast("展廳還在掛畫，請稍候。", true); return; }
+      if (FLY.on) flyStop();
+      if (TOUR.on) tourStop();
+      closeArt();
+      if (!exploring) enter();
+      if (document.pointerLockElement) document.exitPointerLock();
+      move = { f: 0, b: 0, l: 0, r: 0, run: 0 };
+      wheelBoost = 0;
+      const D = DRONE;
+      D.on = true;
+      D.pos = camera.position.clone();
+      D.vel = new THREE.Vector3(0, 0.6, 0);
+      D.yaw = yaw; D.pitch = pitch; D.roll = 0; D.thr = 0; D.ku = 0; D.idle = 0; D.t = 0;
+      D.art = null; D.lock = null; D.dive = null; D.mIn = false;
+      D.fov = camera.fov;
+      document.body.classList.add("droning");
+      $("drone-btn").classList.add("on");
+      droneMode("free");
+      toast("🚁 Drone FPV：游標推到邊緣轉向／升降、滾輪前進；停手會自動正對畫，點畫進入畫中。");
+    }
+    function droneStop() {
+      const D = DRONE;
+      if (!D.on) return;
+      D.on = false;
+      D.mode = "free";
+      camera.fov = D.fov; camera.updateProjectionMatrix();
+      $("drone-flash").style.opacity = 0;
+      document.body.classList.remove("droning");
+      $("drone-btn").classList.remove("on");
+      flySetState("");
+      setLook(null);
+      renderer.domElement.style.cursor = "";
+      const p = camera.position;
+      p.y = PLAYER.h;
+      const rid = flyRoomAt(p) || curRoomId || "hall";
+      const r = LAYOUT.find((x) => x.id === rid);
+      for (let i = 0; i < 60 && !inside(p.x, p.z); i++) {
+        p.x += (r.cx - p.x) * 0.08;
+        p.z += (r.cz - p.z) * 0.08;
+      }
+      setCamAngles(D.yaw, Math.max(-0.4, Math.min(0.4, D.pitch)));
+    }
+    function droneToggle() { if (DRONE.on) droneStop(); else droneStart(); }
+    function droneDive(art) {
+      const D = DRONE;
+      if (!art || D.mode === "dive" || D.mode === "inside") return;
+      const spot = droneSpot(art);
+      const p1 = art.lookAt.clone().addScaledVector(droneInward(art), 0.32);
+      D.art = art;
+      D.dive = { t: 0, dur: 1.15, p0: D.pos.clone(), c: spot.p, p1, y0: D.yaw, y1: spot.yaw, pi0: D.pitch };
+      D.vel.set(0, 0, 0);
+      droneMode("dive", art);
+      setLook(null);
+    }
+    function droneBack() {
+      const D = DRONE;
+      camera.fov = D.fov; camera.updateProjectionMatrix();
+      $("drone-flash").style.opacity = 0;
+      if ($("inspector").classList.contains("open")) { $("inspector").classList.remove("open"); editing = null; }
+      exploring = true;
+      $("resume").classList.remove("show");
+      D.vel.set(0, 0, 0); D.thr = 0; D.idle = 0;
+      if (D.art) {
+        D.lock = droneSpot(D.art);
+        D.yaw = D.lock.yaw; D.pitch = 0;
+        droneMode("align", D.art);                         /* 從畫裡往後退回賞畫位置 */
+      } else droneMode("free");
+    }
+    function droneTick(dt) {
+      if (!exploring) return;
+      const D = DRONE, pos = D.pos, vel = D.vel;
+      D.t += dt;
+      if (D.mode === "inside") { droneBack(); return; }  /* 檢視器已關閉 */
+      if (D.mode === "dive") {
+        const v = D.dive;
+        v.t += dt;
+        const u = Math.min(1, v.t / v.dur);
+        const e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+        const a = 1 - e;
+        pos.set(a * a * v.p0.x + 2 * a * e * v.c.x + e * e * v.p1.x,
+                a * a * v.p0.y + 2 * a * e * v.c.y + e * e * v.p1.y,
+                a * a * v.p0.z + 2 * a * e * v.c.z + e * e * v.p1.z);
+        let dy = v.y1 - v.y0;
+        while (dy > Math.PI) dy -= Math.PI * 2;
+        while (dy < -Math.PI) dy += Math.PI * 2;
+        D.yaw = v.y0 + dy * Math.min(1, e * 1.6);
+        D.pitch = v.pi0 * (1 - Math.min(1, e * 1.6));
+        D.roll *= Math.exp(-6 * dt);
+        camera.fov = D.fov * (1 - 0.45 * e * e);
+        camera.updateProjectionMatrix();
+        $("drone-flash").style.opacity = u > 0.7 ? ((u - 0.7) / 0.3).toFixed(3) : 0;
+        camera.position.copy(pos);
+        yaw = D.yaw; pitch = D.pitch;
+        camera.rotation.set(D.pitch, D.yaw, D.roll, "YXZ");
+        if (u >= 1) {
+          droneMode("inside", D.art);
+          openArt(D.art);
+          lensOpen();
+          setTimeout(() => { $("drone-flash").style.opacity = 0; }, 60);
+        }
+        return;
+      }
+      /* ---- 輸入 ---- */
+      let steerYaw = 0, steerUp = 0;
+      if (D.mIn) {
+        const ex = Math.abs(D.mx) - 0.45, ey = Math.abs(D.my) - 0.45;
+        if (ex > 0) steerYaw = -Math.sign(D.mx) * Math.min(1, ex / 0.5);
+        if (ey > 0) steerUp = Math.sign(D.my) * Math.min(1, ey / 0.5);
+      }
+      const kf = (move.f ? 1 : 0) - (move.b ? 1 : 0);
+      const kx = (move.r ? 1 : 0) - (move.l ? 1 : 0);
+      D.thr *= Math.exp(-1.3 * dt);
+      if (Math.abs(D.thr) < 0.02) D.thr = 0;
+      const active = steerYaw || steerUp || kf || kx || D.ku || Math.abs(D.thr) > 0.06;
+      if (active) {
+        D.idle = 0;
+        if (D.mode !== "free") { D.lock = null; droneMode("free"); }
+      } else {
+        D.idle += dt;
+        if (D.mode === "free" && D.idle > 0.5) {
+          const art = droneFindArt();
+          if (art) { D.art = art; D.lock = droneSpot(art); droneMode("align", art); }
+        }
+      }
+      let pitchTarget;
+      const boost = move.run ? 1.7 : 1;
+      if (D.mode === "free") {
+        D.yaw += steerYaw * 1.7 * dt;
+        const fwd = Math.max(-1, Math.min(1, D.thr + kf)) * DRONE_MAX * boost;
+        const sx = Math.cos(D.yaw), sz = -Math.sin(D.yaw);
+        const fx = -Math.sin(D.yaw), fz = -Math.cos(D.yaw);
+        const up = Math.max(-1, Math.min(1, steerUp + D.ku)) * 2.0 * boost;
+        TMP.dir.set(fx * fwd + sx * kx * 2.4 * boost, up, fz * fwd + sz * kx * 2.4 * boost);
+        vel.lerp(TMP.dir, 1 - Math.exp(-2.6 * dt));
+        pitchTarget = steerUp * 0.32 - fwd * 0.012;
+      } else {
+        /* align / lock：飛到賞畫點並正對 */
+        TMP.dir.copy(D.lock.p).sub(pos).multiplyScalar(2.4);
+        if (TMP.dir.length() > 3.2) TMP.dir.setLength(3.2);
+        vel.lerp(TMP.dir, 1 - Math.exp(-4 * dt));
+        let dy = D.lock.yaw - D.yaw;
+        while (dy > Math.PI) dy -= Math.PI * 2;
+        while (dy < -Math.PI) dy += Math.PI * 2;
+        D.yaw += dy * (1 - Math.exp(-3.2 * dt));
+        pitchTarget = tourAim(D.lock.p, D.art.lookAt).pitch;
+        if (D.mode === "align" && pos.distanceTo(D.lock.p) < 0.06 && Math.abs(dy) < 0.012) droneMode("lock", D.art);
+      }
+      /* ---- 移動 + 逐軸碰撞 ---- */
+      const nx = pos.x + vel.x * dt, ny = pos.y + vel.y * dt, nz = pos.z + vel.z * dt;
+      TMP.fwd.set(nx, pos.y, pos.z);
+      if (flyFree(TMP.fwd)) pos.x = nx; else vel.x *= -0.3;
+      TMP.fwd.set(pos.x, ny, pos.z);
+      if (flyFree(TMP.fwd)) pos.y = ny; else vel.y *= -0.3;
+      TMP.fwd.set(pos.x, pos.y, nz);
+      if (flyFree(TMP.fwd)) pos.z = nz; else vel.z *= -0.3;
+      /* ---- 姿態 ---- */
+      D.pitch += (Math.max(-1.1, Math.min(1.1, pitchTarget)) - D.pitch) * (1 - Math.exp(-3 * dt));
+      const rollT = Math.max(-0.4, Math.min(0.4, -steerYaw * 0.28 - kx * 0.12));
+      D.roll += (rollT - D.roll) * (1 - Math.exp(-4 * dt));
+      const hov = D.mode === "lock" ? 0.012 : 0.004;
+      camera.position.set(pos.x + Math.sin(D.t * 37) * 0.0015, pos.y + Math.sin(D.t * 1.3) * hov, pos.z + Math.cos(D.t * 41) * 0.0015);
+      yaw = D.yaw; pitch = D.pitch;
+      camera.rotation.set(D.pitch, D.yaw, D.roll, "YXZ");
+      /* ---- OSD ---- */
+      D.osdT -= dt;
+      if (D.osdT <= 0) {
+        D.osdT = 0.12;
+        $("d-alt").textContent = pos.y.toFixed(1);
+        $("d-spd").textContent = vel.length().toFixed(1);
+        $("d-thr").textContent = Math.round(D.thr * 100);
+      }
     }
 
     /* ================= v23 360 全景輸出（C 路線） ================= */
@@ -2849,11 +3516,8 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
     ].join("\n");
 
     /* 把 GPano 標記塞進 JPEG 的 APP1，FB／Google 相簿才會當成 360 照片 */
-    async function panoTagJPEG(blob, W, H) {
-      try {
-        const buf = new Uint8Array(await blob.arrayBuffer());
-        if (buf[0] !== 0xFF || buf[1] !== 0xD8) return blob;
-        const xmp = '<?xpacket begin="\uFEFF" id="W5M0MpCehiHzreSzNTczkc9d"?>' +
+    function panoXMP(W, H) {
+      return '<?xpacket begin="\uFEFF" id="W5M0MpCehiHzreSzNTczkc9d"?>' +
           '<x:xmpmeta xmlns:x="adobe:ns:meta/"><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">' +
           '<rdf:Description rdf:about="" xmlns:GPano="http://ns.google.com/photos/1.0/panorama/"' +
           ' GPano:ProjectionType="equirectangular" GPano:UsePanoramaViewer="True"' +
@@ -2861,6 +3525,12 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
           ' GPano:FullPanoWidthPixels="' + W + '" GPano:FullPanoHeightPixels="' + H + '"' +
           ' GPano:CroppedAreaLeftPixels="0" GPano:CroppedAreaTopPixels="0" GPano:PoseHeadingDegrees="0"/>' +
           '</rdf:RDF></x:xmpmeta><?xpacket end="w"?>';
+    }
+    async function panoTagJPEG(blob, W, H) {
+      try {
+        const buf = new Uint8Array(await blob.arrayBuffer());
+        if (buf[0] !== 0xFF || buf[1] !== 0xD8) return blob;
+        const xmp = panoXMP(W, H);
         const body = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\u0000" + xmp);
         const len = body.length + 2;
         if (len > 65533) return blob;
@@ -2872,6 +3542,57 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
         out.set(seg, 2);
         out.set(buf.subarray(2), 2 + seg.length);
         return new Blob([out], { type: "image/jpeg" });
+      } catch (e) { return blob; }
+    }
+
+    /* v25：WebP 版 GPano —— 轉成 VP8X 延伸格式，加 XMP 旗標與「XMP 」chunk */
+    async function panoTagWebP(blob, W, H) {
+      try {
+        const buf = new Uint8Array(await blob.arrayBuffer());
+        const tag = (o) => String.fromCharCode(buf[o], buf[o + 1], buf[o + 2], buf[o + 3]);
+        if (buf.length < 20 || tag(0) !== "RIFF" || tag(8) !== "WEBP") return blob;
+        const u32 = (o) => (buf[o] | (buf[o + 1] << 8) | (buf[o + 2] << 16) | (buf[o + 3] << 24)) >>> 0;
+        const chunks = [];
+        for (let o = 12; o + 8 <= buf.length;) {
+          const sz = u32(o + 4);
+          const end = Math.min(buf.length, o + 8 + sz + (sz & 1));
+          chunks.push({ id: tag(o), data: buf.subarray(o, end) });
+          o = end;
+        }
+        if (chunks.some((c) => c.id === "XMP ")) return blob;
+        const mk = (id, payload) => {
+          const pad = payload.length & 1;
+          const c = new Uint8Array(8 + payload.length + pad);
+          for (let i = 0; i < 4; i++) c[i] = id.charCodeAt(i);
+          const n = payload.length;
+          c[4] = n & 255; c[5] = (n >> 8) & 255; c[6] = (n >> 16) & 255; c[7] = (n >>> 24) & 255;
+          c.set(payload, 8);
+          return c;
+        };
+        const parts = [];
+        if (chunks[0].id === "VP8X") {
+          const x = new Uint8Array(chunks[0].data);
+          x[8] |= 0x04;                                   /* XMP 旗標 */
+          parts.push(x);
+          for (let i = 1; i < chunks.length; i++) parts.push(chunks[i].data);
+        } else {
+          const v = new Uint8Array(10);
+          v[0] = 0x04;
+          const w1 = W - 1, h1 = H - 1;
+          v[4] = w1 & 255; v[5] = (w1 >> 8) & 255; v[6] = (w1 >> 16) & 255;
+          v[7] = h1 & 255; v[8] = (h1 >> 8) & 255; v[9] = (h1 >> 16) & 255;
+          parts.push(mk("VP8X", v));
+          chunks.forEach((c) => parts.push(c.data));
+        }
+        parts.push(mk("XMP ", new TextEncoder().encode(panoXMP(W, H))));
+        const total = 12 + parts.reduce((a, p) => a + p.length, 0);
+        const out = new Uint8Array(total);
+        out.set(buf.subarray(0, 12), 0);
+        const rs = total - 8;
+        out[4] = rs & 255; out[5] = (rs >> 8) & 255; out[6] = (rs >> 16) & 255; out[7] = (rs >>> 24) & 255;
+        let o = 12;
+        parts.forEach((p) => { out.set(p, o); o += p.length; });
+        return new Blob([out], { type: "image/webp" });
       } catch (e) { return blob; }
     }
 
@@ -2917,10 +3638,16 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       quad.geometry.dispose(); mat.dispose(); rt.dispose(); cubeRT.dispose();
       markShadow();
 
-      const raw = await new Promise((res) => cv.toBlob(res, "image/jpeg", 0.9));
+      let fmt = PANO.fmt, raw = null, fell = false;
+      if (fmt === "webp") {
+        raw = await new Promise((res) => cv.toBlob(res, "image/webp", 0.9));
+        if (!raw || raw.type !== "image/webp") { fmt = "jpg"; raw = null; fell = true; }   /* 舊版 Safari 不支援 WebP 編碼 */
+      }
+      if (!raw) raw = await new Promise((res) => cv.toBlob(res, "image/jpeg", 0.9));
       cv.width = cv.height = 1;
       if (!raw) return null;
-      return { blob: await panoTagJPEG(raw, W, H), name: rec.name, w: W, h: H };
+      const blob = fmt === "webp" ? await panoTagWebP(raw, W, H) : await panoTagJPEG(raw, W, H);
+      return { blob, name: rec.name, w: W, h: H, fmt, fell };
     }
 
     async function panoExport() {
@@ -2931,16 +3658,20 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       setBusy(true);
       try {
         const done = [];
+        let fellBack = false;
         for (let i = 0; i < ids.length; i++) {
-          setProgress(`產生 360 全景… ${i + 1} / ${ids.length}`);
+          setProgress(`產生 360 全景（${PANO.fmt === "webp" ? "WebP" : "JPG"}）… ${i + 1} / ${ids.length}`);
           await new Promise((r) => setTimeout(r, 30));
           const out = await panoOne(ids[i]);
           if (!out) continue;
-          const name = `${fileSafe(HALL.name)}-${fileSafe(out.name)}-360-${mmdd()}.jpg`;
+          if (out.fell) fellBack = true;
+          const ext = out.fmt === "webp" ? "webp" : "jpg";
+          const mime = out.fmt === "webp" ? "image/webp" : "image/jpeg";
+          const name = `${fileSafe(HALL.name)}-${fileSafe(out.name)}-360-${mmdd()}.${ext}`;
           let shared = false;
           if (TOUCH && ids.length === 1 && typeof File === "function" && navigator.canShare) {
             try {
-              const f = new File([out.blob], name, { type: "image/jpeg" });
+              const f = new File([out.blob], name, { type: mime });
               if (navigator.canShare({ files: [f] })) { await navigator.share({ files: [f], title: name }); shared = true; }
             } catch (e) {}
           }
@@ -2952,10 +3683,13 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
             setTimeout(() => URL.revokeObjectURL(url), 60000);
             await new Promise((r) => setTimeout(r, 400));   /* 連續下載留間隔，避免瀏覽器擋掉 */
           }
-          done.push(`${out.name}（${(out.blob.size / 1048576).toFixed(1)} MB · ${out.w}×${out.h}）`);
+          done.push(`${out.name}（${ext.toUpperCase()} · ${(out.blob.size / 1048576).toFixed(1)} MB · ${out.w}×${out.h}）`);
         }
         setProgress(done.length
-          ? `已輸出 360 全景：${done.join("、")}。上傳到 FB 時會自動辨識為 360 照片。`
+          ? `已輸出 360 全景：${done.join("、")}。` +
+            (fellBack ? "此瀏覽器不支援 WebP 編碼，已自動改存 JPG。"
+              : PANO.fmt === "webp" ? "WebP 已寫入 GPano 標記；FB 對 WebP 360 支援不穩，要發 360 貼文請改選 JPG。"
+              : "上傳到 FB 時會自動辨識為 360 照片。")
           : "沒有可輸出的展廳。", !done.length);
       } catch (e) {
         setProgress("360 輸出失敗：" + ((e && e.message) || e), true);
@@ -3031,6 +3765,7 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       LENS.on = false;
       LENS.pinch = null; LENS.drag = null;
       $("lens").classList.remove("open", "grabbing");
+      if (DRONE.on && DRONE.mode === "inside") closeArt();   /* v29：離開畫中 → 關檢視器，無人機退回 */
     }
     function bindLens() {
       const stage = $("lens-stage");
@@ -3160,22 +3895,47 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
           if (e.code === "Escape") closeArt();
           return;
         }
+        if (FLY.on && /^(KeyW|KeyA|KeyS|KeyD|Arrow)/.test(e.code)) flyStop();
+        if (DRONE.on) {
+          if (e.code === "Space" || e.code === "KeyE") { DRONE.ku = 1; e.preventDefault(); }
+          if (e.code === "KeyC" || e.code === "KeyQ") { DRONE.ku = -1; e.preventDefault(); }
+        }
         on(e, 1);
         const map = { Digit1: () => setWallStyle(0), Digit2: () => setWallStyle(1), Digit3: () => setWallStyle(2),
           Digit4: () => setLightMode(0), Digit5: () => setLightMode(1), Digit6: () => setLightMode(2), Digit7: () => setLightMode(3),
           KeyL: cycleLightMode, KeyK: () => setWallStyle(WALLS.mode + 1), KeyH: () => toggleHud(),
-          KeyG: () => tourStart(false), KeyR: () => tourStart(true),
-          Escape: () => { if (TOUR.on) tourStop(); else closeArt(); } };
+          KeyG: () => tourStart(false), KeyR: () => tourStart(true), KeyF: () => flyToggle(), KeyV: () => droneToggle(),
+          Escape: () => { if (DRONE.on) droneStop(); else if (FLY.on) flyStop(); else if (TOUR.on) tourStop(); else closeArt(); } };
         const code = e.code.replace("Numpad", "Digit");
         if (map[code]) { e.preventDefault(); map[code](); }
       });
-      addEventListener("keyup", (e) => on(e, 0));
-      addEventListener("blur", () => { move = { f: 0, b: 0, l: 0, r: 0, run: 0 }; });
+      addEventListener("keyup", (e) => {
+        on(e, 0);
+        if (/^(Space|KeyE|KeyC|KeyQ)$/.test(e.code)) DRONE.ku = 0;
+      });
+      addEventListener("blur", () => { move = { f: 0, b: 0, l: 0, r: 0, run: 0 }; DRONE.ku = 0; DRONE.mIn = false; });
+      /* v29：Drone 以游標位置控制 */
+      addEventListener("mousemove", (e) => {
+        if (!DRONE.on) return;
+        const r = renderer.domElement.getBoundingClientRect();
+        DRONE.cx = e.clientX; DRONE.cy = e.clientY;
+        DRONE.mx = ((e.clientX - r.left) / r.width) * 2 - 1;
+        DRONE.my = -(((e.clientY - r.top) / r.height) * 2 - 1);
+        DRONE.mIn = e.target === renderer.domElement;
+      });
+      document.addEventListener("mouseout", (e) => { if (!e.relatedTarget) DRONE.mIn = false; });
+      renderer.domElement.addEventListener("contextmenu", (e) => {
+        if (!DRONE.on) return;
+        e.preventDefault();
+        droneStop();
+      });
       addEventListener("wheel", (e) => {
         if (!exploring || uiBlocked()) return;
         e.preventDefault();
         let dy = e.deltaY;
         if (e.deltaMode === 1) dy *= 16;
+        if (DRONE.on) { DRONE.thr = Math.max(-1, Math.min(1, DRONE.thr - dy * 0.0025)); return; }
+        if (FLY.on) flyStop();
         wheelBoost += -dy * 0.045;
         wheelBoost = Math.max(-16, Math.min(16, wheelBoost));
       }, { passive: false });
@@ -3195,6 +3955,13 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       renderer.domElement.addEventListener("mousedown", (e) => {
         if (e.button !== 0 || uiBlocked() || TOUCH) return;
         if (!exploring) { enter(); return; }
+        if (DRONE.on) {
+          e.preventDefault();
+          const art = artAtXY(e.clientX, e.clientY);
+          if (art) droneDive(art);
+          return;
+        }
+        if (FLY.on) { flyStop(); return; }
         dragLook = true;
         dragMoved = 0;
       });
@@ -3244,6 +4011,8 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
         setWallStyle(+b.dataset.wall);
       });
       $("hud-hide").onclick = () => toggleHud(false);
+      $("fly-btn").onclick = (e) => { e.currentTarget.blur(); flyToggle(); };
+      $("drone-btn").onclick = (e) => { e.currentTarget.blur(); droneToggle(); };
       $("hud-peek").onclick = () => toggleHud(true);
       $("room-chip").onclick = () => $("perf").classList.toggle("show");
       $("iv-matte").addEventListener("click", (e) => {
@@ -3428,12 +4197,21 @@ window.GALLERY_EMBED = {"10":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD
       if (blocked && now - lastRender < 100) return;
       lastRender = now;
       if (!blocked && !REC.on) perfTick(raw);     /* 錄影中不要自動改解析度 */
-      if (TOUR.on) tourTick(dt);
-      movePlayer(dt);
+      let step = dt;
+      const wrec = REC.on && REC.webp;
+      if (wrec) {
+        if (REC.busy) return;                 /* 等上一格編碼完成，時間軸不前進 → 不漏格 */
+        step = 1 / REC.fps;
+      }
+      if (TOUR.on) tourTick(step);
+      if (FLY.on && !blocked) flyTick(step);
+      if (DRONE.on && !blocked) droneTick(step);
+      movePlayer(step);
       detectRoom();
       pick();
-      updateLights(blocked ? 0.1 : dt);
+      updateLights(blocked ? 0.1 : step);
       renderer.render(scene, camera);
+      if (wrec && REC.on && TOUR.on) recGrab();
     }
 
     function onResize() {

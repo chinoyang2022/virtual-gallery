@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TINA KENG STYLE GALLERY | 本機測試版</title>
+
+  <style>
+    /* 耿畫廊風格 - 本機極簡色彩系統 */
+    :root {
+      --bg-color: #ffffff;
+      --text-main: #111111;
+      --text-muted: #666666;
+      --border-color: #e5e5e5;
+      --placeholder-bg: #f0f0f0;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 頂部導覽列 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      padding: 0 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    nav a {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-muted);
+      margin-left: 30px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text-main);
+    }
+
+    /* 主視覺區塊 Hero Section */
+    .hero {
+      margin-top: 80px;
+      padding: 60px 50px;
+      max-width: 1300px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    /* 純 CSS 本機占位圖片區塊 (絕不破圖) */
+    .hero-image-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--placeholder-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+    }
+
+    .hero-content {
+      padding-left: 10px;
+    }
+
+    .exhibition-type {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .exhibition-title {
+      font-size: 32px;
+      font-weight: 300;
+      line-height: 1.3;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .artist-name {
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--text-main);
+      margin-bottom: 20px;
+    }
+
+    .exhibition-date {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* 進入 3D 展廳按鈕 */
+    .btn-3d {
+      display: inline-block;
+      padding: 16px 36px;
+      border: 1px solid var(--text-main);
+      background: #111111;
+      color: #ffffff;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-3d:hover {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    /* 作品牆 Grid */
+    .artworks-section {
+      max-width: 1300px;
+      margin: 40px auto 80px;
+      padding: 0 50px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 30px;
+      letter-spacing: 1px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .grid-item {
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .grid-item-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--placeholder-bg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+      transition: background 0.2s;
+    }
+
+    .grid-item:hover .grid-item-placeholder {
+      background: #e5e5e5;
+    }
+
+    .grid-item-title {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .grid-item-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 800px) {
+      header { padding: 0 20px; }
+      .hero { grid-template-columns: 1fr; padding: 30px 20px; }
+      .artworks-section { padding: 0 20px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 頂部選單列 -->
+  <header>
+    <a href="#" class="logo">TINA KENG GALLERY</a>
+    <nav>
+      <a href="#" class="active">EXHIBITIONS</a>
+      <a href="#">ARTISTS</a>
+      <a href="gallery3d.html">3D VIRTUAL</a>
+      <a href="#">ABOUT</a>
+    </nav>
+  </header>
+
+  <!-- 主視覺區塊 -->
+  <section class="hero">
+    <!-- 本機圖框，絕不破圖 -->
+    <div class="hero-image-placeholder">
+      <span>[ EXHIBITION PREVIEW IMAGE ]</span>
+      <span style="font-size: 10px; margin-top: 5px;">可在本機替換為 img/cover.jpg</span>
+    </div>
+    
+    <div class="hero-content">
+      <p class="exhibition-type">CURRENT EXHIBITION</p>
+      <h1 class="exhibition-title">La Galerie v50: 經典典藏與當代對話</h1>
+      <p class="artist-name">GUEST CURATOR & ARTISTS</p>
+      <p class="exhibition-date">2026.10.01 – 2026.12.31</p>
+      
+      <!-- 點擊跳轉到您原有的 3D 展廳 -->
+      <a href="gallery3d.html" class="btn-3d">ENTER 3D VIRTUAL EXHIBITION ➔</a>
+    </div>
+  </section>
+
+  <!-- 作品清單區塊 -->
+  <section class="artworks-section">
+    <h2 class="section-title">SELECTED WORKS</h2>
+    <div class="grid">
+      <a href="gallery3d.html" class="grid-item">
+        <div class="grid-item-placeholder">WORK 01</div>
+        <div class="grid-item-title">Salon Principal No.1</div>
+        <div class="grid-item-sub">Oil on Canvas, 2026</div>
+      </a>
+      <a href="gallery3d.html" class="grid-item">
+        <div class="grid-item-placeholder">WORK 02</div>
+        <div class="grid-item-title">West Wing Study</div>
+        <div class="grid-item-sub">Mixed Media, 2025</div>
+      </a>
+      <a href="gallery3d.html" class="grid-item">
+        <div class="grid-item-placeholder">WORK 03</div>
+        <div class="grid-item-title">East Salon Composition</div>
+        <div class="grid-item-sub">Acrylic on Linen, 2026</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 TINA KENG GALLERY / LOCAL TEST VERSION
+  </footer>
+
+</body>
+</html>
